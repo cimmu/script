@@ -115,7 +115,10 @@ start_menu(){
 	check_docker
     check_docker_compose
     echo -e "\033[32m====================================\033[0m"	
-    echo -e "\033[32m 恭喜，您已经完成docker环境的安装                        "
+    echo -e "\033[32m 恭喜，您已经完成docker环境的安装"      \033[0m"
+    echo -e "\033[44;37m $(docker --version)             \033[0m"
+    echo -e "\033[44;37m $(docker-compose --version)     \033[0m"
+    echo -e "\033[44;37m $(python3 --version)            \033[0m"
     echo -e "\033[32m====================================\033[0m"	
 	;;
     esac
