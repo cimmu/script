@@ -25,8 +25,10 @@ install_pack() {
     pack_name="wget未知"
     echo "===> Start to install curl"    
     if [ -x "$(command -v yum)" ]; then
+        yum install -y python3 python3-pip
         command -v curl > /dev/null || yum update -y && yum install -y curl
     elif [ -x "$(command -v apt)" ]; then
+        apt install -y python3 python3-pip
         command -v curl > /dev/null || apt update -y && apt install -y curl
     else
         echo "Package manager is not support this OS. Only support to use yum/apt."
@@ -42,8 +44,14 @@ install_docker() {
     systemctl enable docker  
 }
 install_docker_compose() {
+    sysinfo=$(uname -r)
+    sysver="amd"
+    result=$(echo $sysinfo | grep "${sysver}")
+    if [ "" != "$result" ]; then
 	curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 	chmod +x /usr/local/bin/docker-compose
+    else
+        pip3 install docker-compose
 }
 
 # 单独检测docker是否安装，否则执行安装docker。
