@@ -52,6 +52,7 @@ install_docker_compose() {
 	chmod +x /usr/local/bin/docker-compose
     else
         pip3 install docker-compose
+    fi
 }
 
 # 单独检测docker是否安装，否则执行安装docker。
