@@ -21,8 +21,6 @@ setupService(){
 #! /bin/bash
 [[ "$EUID" -ne '0' ]] && echo "Error:This script must be run as root!" && exit 1;
 
-
-
 base=/etc/dnat
 mkdir $base 2>/dev/null
 conf=$base/conf
@@ -30,6 +28,17 @@ firstAfterBoot=1
 lastConfig="/iptables_nat.sh"
 lastConfigTmp="/iptables_nat.sh_tmp"
 
+installIptables(){
+    if [ -x "$(command -v yum)" ]; then
+        command -v iptables > /dev/null || yum update -y && yum install -y iptables && yum install -y iptables-services
+    elif [ -x "$(command -v apt-get)" ]; then
+        command -v iptables > /dev/null || apt-get update -y && apt-get install -y iptables && apt-get install -y iptables-services
+    else
+        echo "Package manager is not support this OS. Only support to use yum/apt."
+        exit -1
+    fi
+}
+installIptables
 
 ####
 echo "正在安装依赖...."
